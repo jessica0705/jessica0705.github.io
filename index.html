@@ -22,7 +22,7 @@ h1{font-size:30px;letter-spacing:-1px;margin:0}.subtitle{color:var(--muted);font
 .stat{background:linear-gradient(145deg,#101622,#0c111b);border:1px solid var(--line);padding:13px;border-radius:12px}.stat b{display:block;font-size:20px}.stat span{font-size:11px;color:var(--muted)}
 .tier{margin:12px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0b1019}.tier-head{display:flex;align-items:center;padding:10px 13px;background:#111827;border-bottom:1px solid var(--line)}.badge{width:42px;height:34px;border-radius:9px;display:grid;place-items:center;font-weight:900;font-size:17px;margin-right:10px}.tier-S .badge{background:#9b5cff}.tier-A .badge{background:#3b82f6}.tier-B .badge{background:#22c55e}.tier-C .badge{background:#eab308;color:#111}.tier-D .badge{background:#f97316}.tier-F .badge{background:#ef4444}.tier-title{font-weight:800}.tier-desc{font-size:11px;color:var(--muted)}.tier-count{margin-left:auto;color:var(--muted);font-size:12px}
 .dropzone{min-height:108px;padding:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:9px}.dropzone.empty{display:block;color:#556176;font-size:13px;padding:28px;text-align:center}
-.card{background:linear-gradient(145deg,#171e2d,#101621);border:1px solid #2a354b;border-radius:12px;padding:11px;transition:.15s;cursor:grab}.card:hover{transform:translateY(-2px);border-color:#536583;box-shadow:0 10px 25px #0005}.card.dragging{opacity:.45}.player-top{display:flex;justify-content:space-between;gap:10px}.name{font-weight:800}.meta{color:var(--muted);font-size:11px;margin-top:2px}.mini{font-size:10px;color:var(--muted)}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:9px}.metric{background:#0c121d;border-radius:7px;padding:6px}.metric b{display:block;font-size:13px}.metric span{font-size:9px;color:var(--muted)}.edge{color:var(--good)}.risk{color:var(--warn)}
+.card{background:linear-gradient(145deg,#171e2d,#101621);border:1px solid #2a354b;border-radius:12px;padding:11px;transition:.15s;cursor:grab}.card:hover{transform:translateY(-2px);border-color:#536583;box-shadow:0 10px 25px #0005}.card.dragging{opacity:.45}.player-top{display:flex;justify-content:space-between;gap:10px}.name{font-weight:800}.player-id{display:flex;align-items:center;gap:9px}.headshot{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#202a3c;border:2px solid #33405a;flex:none}.meta{color:var(--muted);font-size:11px;margin-top:2px}.mini{font-size:10px;color:var(--muted)}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:9px}.metric{background:#0c121d;border-radius:7px;padding:6px}.metric b{display:block;font-size:13px}.metric span{font-size:9px;color:var(--muted)}.edge{color:var(--good)}.risk{color:var(--warn)}
 details{margin-top:8px;border-top:1px solid #263044;padding-top:7px}summary{cursor:pointer;font-size:11px;color:#c9d3e6}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.detail-grid div{font-size:11px;color:var(--muted);background:#0d131f;padding:6px;border-radius:6px}.detail-grid b{color:var(--text);float:right}.why{margin-top:8px;font-size:11px;line-height:1.45;color:#c3cce0}.why strong{color:white}.footer{color:#66738a;font-size:11px;text-align:center;padding:24px}
 .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal.show{display:flex}.modal-box{width:min(800px,100%);max-height:90vh;overflow:auto;background:#0e141f;border:1px solid #33405a;border-radius:16px;padding:18px;box-shadow:0 25px 80px #000b}.modal-box h2{margin-top:0}.code{width:100%;min-height:250px;background:#080c14;color:#dce6f8;border:1px solid #2b3548;border-radius:10px;padding:10px;font-family:ui-monospace,monospace;font-size:12px}.notice{background:#111a2a;border:1px solid #2c4161;border-radius:10px;padding:10px;font-size:12px;color:#bdc9dc;line-height:1.5;margin:10px 0}
 @media(max-width:800px){header{align-items:flex-start;flex-direction:column}.toolbar,.stats{grid-template-columns:1fr 1fr}.toolbar .control:first-child{grid-column:1/-1}.dropzone{grid-template-columns:1fr}.container{padding:12px}.actions{width:100%}}
@@ -63,33 +63,33 @@ details{margin-top:8px;border-top:1px solid #263044;padding-top:7px}summary{curs
 
 <div class="modal" id="modal"><div class="modal-box">
   <h2>Import Week</h2>
-  <div class="notice">Paste a JSON array of player objects. The file accepts the fields used by the demo below. You can export your own projection data into this structure later.</div>
+  <div class="notice">Paste a JSON array of player objects. Add an optional <code>photo</code> URL for a player headshot. If omitted, the site automatically uses initials. You can export your own projection data into this structure later.</div>
   <textarea class="code" id="jsonInput" spellcheck="false"></textarea>
   <div class="actions" style="margin-top:10px"><button class="btn" id="loadDemo">Load Demo</button><button class="btn primary" id="applyImport">Import Data</button><button class="btn" id="closeModal">Cancel</button></div>
 </div></div>
 
 <script>
 const DEMO = [
-{name:"Christian McCaffrey",team:"SF",pos:"RB",opp:"ARI",td:0.64,rtd:0.59,ptd:0,projTD:0.86,fantasy:19.4,odds:-155,rz:9,goal:5,teamTotal:26.2},
-{name:"Jahmyr Gibbs",team:"DET",pos:"RB",opp:"NYJ",td:0.61,rtd:0.55,ptd:0,projTD:0.78,fantasy:18.8,odds:-150,rz:8,goal:4,teamTotal:27.1},
-{name:"Derrick Henry",team:"BAL",pos:"RB",opp:"DAL",td:0.59,rtd:0.57,ptd:0,projTD:0.75,fantasy:17.9,odds:-145,rz:8,goal:5,teamTotal:25.8},
-{name:"Amon-Ra St. Brown",team:"DET",pos:"WR",opp:"NYJ",td:0.56,rtd:0.02,ptd:0,projTD:0.68,fantasy:17.1,odds:+105,rz:7,goal:2,teamTotal:27.1},
-{name:"CeeDee Lamb",team:"DAL",pos:"WR",opp:"BAL",td:0.53,rtd:0.01,ptd:0,projTD:0.62,fantasy:16.6,odds:+110,rz:6,goal:1,teamTotal:24.4},
-{name:"Josh Allen",team:"BUF",pos:"QB",opp:"LAC",td:0.39,rtd:0.38,ptd:0.72,projTD:0.82,fantasy:23.5,odds:+135,rz:5,goal:2,teamTotal:25.1},
-{name:"Lamar Jackson",team:"BAL",pos:"QB",opp:"DAL",td:0.42,rtd:0.34,ptd:0.76,projTD:0.91,fantasy:24.1,odds:+125,rz:5,goal:2,teamTotal:25.8},
-{name:"Travis Kelce",team:"KC",pos:"TE",opp:"MIA",td:0.49,rtd:0.01,ptd:0,projTD:0.55,fantasy:13.9,odds:+120,rz:6,goal:1,teamTotal:25.4},
-{name:"Saquon Barkley",team:"PHI",pos:"RB",opp:"CHI",td:0.47,rtd:0.44,ptd:0,projTD:0.59,fantasy:16.0,odds:+120,rz:7,goal:3,teamTotal:24.7},
-{name:"Ja'Marr Chase",team:"CIN",pos:"WR",opp:"PIT",td:0.46,rtd:0.01,ptd:0,projTD:0.54,fantasy:16.3,odds:+125,rz:6,goal:1,teamTotal:24.1},
-{name:"Breece Hall",team:"NYJ",pos:"RB",opp:"DET",td:0.39,rtd:0.36,ptd:0,projTD:0.47,fantasy:14.8,odds:+145,rz:6,goal:3,teamTotal:19.6},
-{name:"Marvin Harrison Jr.",team:"ARI",pos:"WR",opp:"SF",td:0.38,rtd:0.01,ptd:0,projTD:0.44,fantasy:13.9,odds:+150,rz:5,goal:1,teamTotal:20.1},
-{name:"George Kittle",team:"SF",pos:"TE",opp:"ARI",td:0.36,rtd:0.01,ptd:0,projTD:0.41,fantasy:13.2,odds:+165,rz:5,goal:1,teamTotal:26.2},
-{name:"Rashee Rice",team:"KC",pos:"WR",opp:"MIA",td:0.35,rtd:0.01,ptd:0,projTD:0.42,fantasy:14.7,odds:+175,rz:5,goal:1,teamTotal:25.4},
-{name:"James Cook",team:"BUF",pos:"RB",opp:"LAC",td:0.34,rtd:0.32,ptd:0,projTD:0.39,fantasy:15.1,odds:+170,rz:5,goal:2,teamTotal:25.1},
-{name:"DeVonta Smith",team:"PHI",pos:"WR",opp:"CHI",td:0.32,rtd:0.01,ptd:0,projTD:0.36,fantasy:12.9,odds:+185,rz:4,goal:1,teamTotal:24.7},
-{name:"Sam LaPorta",team:"DET",pos:"TE",opp:"NYJ",td:0.30,rtd:0.01,ptd:0,projTD:0.34,fantasy:11.4,odds:+200,rz:4,goal:1,teamTotal:27.1},
-{name:"Kyler Murray",team:"ARI",pos:"QB",opp:"SF",td:0.31,rtd:0.25,ptd:0.54,projTD:0.61,fantasy:19.2,odds:+185,rz:4,goal:2,teamTotal:20.1},
-{name:"Tee Higgins",team:"CIN",pos:"WR",opp:"PIT",td:0.29,rtd:0.01,ptd:0,projTD:0.34,fantasy:12.5,odds:+210,rz:4,goal:1,teamTotal:24.1},
-{name:"T.J. Hockenson",team:"MIN",pos:"TE",opp:"TB",td:0.28,rtd:0.01,ptd:0,projTD:0.32,fantasy:10.9,odds:+220,rz:4,goal:1,teamTotal:22.8}
+{name:"Christian McCaffrey",team:"SF",pos:"RB",opp:"ARI",photo:"https://ui-avatars.com/api/?name=Christian+McCaffrey&background=1b2638&color=ffffff&size=128&bold=true",td:0.64,rtd:0.59,ptd:0,projTD:0.86,fantasy:19.4,odds:-155,rz:9,goal:5,teamTotal:26.2},
+{name:"Jahmyr Gibbs",team:"DET",pos:"RB",opp:"NYJ",photo:"https://ui-avatars.com/api/?name=Jahmyr+Gibbs&background=1b2638&color=ffffff&size=128&bold=true",td:0.61,rtd:0.55,ptd:0,projTD:0.78,fantasy:18.8,odds:-150,rz:8,goal:4,teamTotal:27.1},
+{name:"Derrick Henry",team:"BAL",pos:"RB",opp:"DAL",photo:"https://ui-avatars.com/api/?name=Derrick+Henry&background=1b2638&color=ffffff&size=128&bold=true",td:0.59,rtd:0.57,ptd:0,projTD:0.75,fantasy:17.9,odds:-145,rz:8,goal:5,teamTotal:25.8},
+{name:"Amon-Ra St. Brown",team:"DET",pos:"WR",opp:"NYJ",photo:"https://ui-avatars.com/api/?name=Amon-Ra+St.+Brown&background=1b2638&color=ffffff&size=128&bold=true",td:0.56,rtd:0.02,ptd:0,projTD:0.68,fantasy:17.1,odds:+105,rz:7,goal:2,teamTotal:27.1},
+{name:"CeeDee Lamb",team:"DAL",pos:"WR",opp:"BAL",photo:"https://ui-avatars.com/api/?name=CeeDee+Lamb&background=1b2638&color=ffffff&size=128&bold=true",td:0.53,rtd:0.01,ptd:0,projTD:0.62,fantasy:16.6,odds:+110,rz:6,goal:1,teamTotal:24.4},
+{name:"Josh Allen",team:"BUF",pos:"QB",opp:"LAC",photo:"https://ui-avatars.com/api/?name=Josh+Allen&background=1b2638&color=ffffff&size=128&bold=true",td:0.39,rtd:0.38,ptd:0.72,projTD:0.82,fantasy:23.5,odds:+135,rz:5,goal:2,teamTotal:25.1},
+{name:"Lamar Jackson",team:"BAL",pos:"QB",opp:"DAL",photo:"https://ui-avatars.com/api/?name=Lamar+Jackson&background=1b2638&color=ffffff&size=128&bold=true",td:0.42,rtd:0.34,ptd:0.76,projTD:0.91,fantasy:24.1,odds:+125,rz:5,goal:2,teamTotal:25.8},
+{name:"Travis Kelce",team:"KC",pos:"TE",opp:"MIA",photo:"https://ui-avatars.com/api/?name=Travis+Kelce&background=1b2638&color=ffffff&size=128&bold=true",td:0.49,rtd:0.01,ptd:0,projTD:0.55,fantasy:13.9,odds:+120,rz:6,goal:1,teamTotal:25.4},
+{name:"Saquon Barkley",team:"PHI",pos:"RB",opp:"CHI",photo:"https://ui-avatars.com/api/?name=Saquon+Barkley&background=1b2638&color=ffffff&size=128&bold=true",td:0.47,rtd:0.44,ptd:0,projTD:0.59,fantasy:16.0,odds:+120,rz:7,goal:3,teamTotal:24.7},
+{name:"Ja'Marr Chase",team:"CIN",pos:"WR",opp:"PIT",photo:"https://ui-avatars.com/api/?name=Ja'Marr+Chase&background=1b2638&color=ffffff&size=128&bold=true",td:0.46,rtd:0.01,ptd:0,projTD:0.54,fantasy:16.3,odds:+125,rz:6,goal:1,teamTotal:24.1},
+{name:"Breece Hall",team:"NYJ",pos:"RB",opp:"DET",photo:"https://ui-avatars.com/api/?name=Breece+Hall&background=1b2638&color=ffffff&size=128&bold=true",td:0.39,rtd:0.36,ptd:0,projTD:0.47,fantasy:14.8,odds:+145,rz:6,goal:3,teamTotal:19.6},
+{name:"Marvin Harrison Jr.",team:"ARI",pos:"WR",opp:"SF",photo:"https://ui-avatars.com/api/?name=Marvin+Harrison+Jr.&background=1b2638&color=ffffff&size=128&bold=true",td:0.38,rtd:0.01,ptd:0,projTD:0.44,fantasy:13.9,odds:+150,rz:5,goal:1,teamTotal:20.1},
+{name:"George Kittle",team:"SF",pos:"TE",opp:"ARI",photo:"https://ui-avatars.com/api/?name=George+Kittle&background=1b2638&color=ffffff&size=128&bold=true",td:0.36,rtd:0.01,ptd:0,projTD:0.41,fantasy:13.2,odds:+165,rz:5,goal:1,teamTotal:26.2},
+{name:"Rashee Rice",team:"KC",pos:"WR",opp:"MIA",photo:"https://ui-avatars.com/api/?name=Rashee+Rice&background=1b2638&color=ffffff&size=128&bold=true",td:0.35,rtd:0.01,ptd:0,projTD:0.42,fantasy:14.7,odds:+175,rz:5,goal:1,teamTotal:25.4},
+{name:"James Cook",team:"BUF",pos:"RB",opp:"LAC",photo:"https://ui-avatars.com/api/?name=James+Cook&background=1b2638&color=ffffff&size=128&bold=true",td:0.34,rtd:0.32,ptd:0,projTD:0.39,fantasy:15.1,odds:+170,rz:5,goal:2,teamTotal:25.1},
+{name:"DeVonta Smith",team:"PHI",pos:"WR",opp:"CHI",photo:"https://ui-avatars.com/api/?name=DeVonta+Smith&background=1b2638&color=ffffff&size=128&bold=true",td:0.32,rtd:0.01,ptd:0,projTD:0.36,fantasy:12.9,odds:+185,rz:4,goal:1,teamTotal:24.7},
+{name:"Sam LaPorta",team:"DET",pos:"TE",opp:"NYJ",photo:"https://ui-avatars.com/api/?name=Sam+LaPorta&background=1b2638&color=ffffff&size=128&bold=true",td:0.30,rtd:0.01,ptd:0,projTD:0.34,fantasy:11.4,odds:+200,rz:4,goal:1,teamTotal:27.1},
+{name:"Kyler Murray",team:"ARI",pos:"QB",opp:"SF",photo:"https://ui-avatars.com/api/?name=Kyler+Murray&background=1b2638&color=ffffff&size=128&bold=true",td:0.31,rtd:0.25,ptd:0.54,projTD:0.61,fantasy:19.2,odds:+185,rz:4,goal:2,teamTotal:20.1},
+{name:"Tee Higgins",team:"CIN",pos:"WR",opp:"PIT",photo:"https://ui-avatars.com/api/?name=Tee+Higgins&background=1b2638&color=ffffff&size=128&bold=true",td:0.29,rtd:0.01,ptd:0,projTD:0.34,fantasy:12.5,odds:+210,rz:4,goal:1,teamTotal:24.1},
+{name:"T.J. Hockenson",team:"MIN",pos:"TE",opp:"TB",photo:"https://ui-avatars.com/api/?name=T.J.+Hockenson&background=1b2638&color=ffffff&size=128&bold=true",td:0.28,rtd:0.01,ptd:0,projTD:0.32,fantasy:10.9,odds:+220,rz:4,goal:1,teamTotal:22.8}
 ];
 
 let players = JSON.parse(localStorage.getItem("rzr-data") || "null") || DEMO;
@@ -132,9 +132,14 @@ function render(){
 function card(p){
  const t=activeTier(p), e=edge(p), override=overrides[p.name], qb=p.pos==="QB";
  return `<article class="card" draggable="true" data-name="${p.name}">
-   <div class="player-top"><div><div class="name">${p.name}</div><div class="meta">${p.team} ${p.pos} • vs ${p.opp}</div></div><div class="mini">${override? "↕ Override":"Model "+t}</div></div>
+   <div class="player-top"><div class="player-id">
+   ${p.photo ? `<img class="headshot" src="${p.photo}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">` : `<div class="headshot" style="display:grid;place-items:center;font-size:12px;font-weight:800">${p.name.split(' ').map(x=>x[0]).slice(0,2).join('')}</div>`}
+   <div><div class="name">${p.name}</div><div class="meta">${p.team} ${p.pos} • vs ${p.opp}</div></div>
+ </div><div class="mini">${override? "↕ Override":"Model "+t}</div></div>
    <div class="metrics"><div class="metric"><b>${Math.round(p.td*100)}%</b><span>Any TD</span></div><div class="metric"><b>${p.fantasy.toFixed(1)}</b><span>Fantasy</span></div><div class="metric"><b class="${e>0?".edge":"risk"}">${e>=0?"+":""}${(e*100).toFixed(1)}%</b><span>Edge</span></div></div>
-   <details><summary>Expand player card</summary><div class="detail-grid">
+   <details><summary>Expand player card</summary>
+   ${p.photo ? `<div style="display:flex;justify-content:center;margin:9px 0 4px"><img src="${p.photo}" alt="${p.name}" loading="lazy" style="width:86px;height:86px;border-radius:14px;object-fit:cover;border:2px solid #3a4760" onerror="this.style.display='none'"></div>` : ""}
+   <div class="detail-grid">
      <div>Rushing TD <b>${Math.round(p.rtd*100)}%</b></div><div>Passing TD <b>${qb?Math.round(p.ptd*100)+"%":"—"}</b></div>
      <div>Projected TDs <b>${p.projTD.toFixed(2)}</b></div><div>Anytime TD <b>${fmtOdds(p.odds)}</b></div>
      <div>Implied prob. <b>${Math.round(implied(p.odds)*100)}%</b></div><div>Team total <b>${p.teamTotal.toFixed(1)}</b></div>
