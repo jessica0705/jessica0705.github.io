@@ -179,5 +179,13 @@ document.getElementById("loadDemo").onclick=()=>document.getElementById("jsonInp
 document.getElementById("applyImport").onclick=()=>{try{const x=JSON.parse(document.getElementById("jsonInput").value);if(!Array.isArray(x))throw Error();players=x;overrides={};localStorage.setItem("rzr-data",JSON.stringify(players));localStorage.removeItem("rzr-overrides");populateTeams();modal.classList.remove("show");render()}catch(e){alert("Import failed. Paste a valid JSON array.")}};
 document.getElementById("refreshSchedule").onclick=refreshSchedule;populateTeams();render();
 </script>
+
+<footer class="footer">
+  <div class="footer-credit">
+    <img src="IMG_0213.jpeg" alt="Jessica Alejandro">
+    <span>Created by <span class="footer-name">Jessica Alejandro</span></span>
+  </div>
+</footer>
+
 </body>
 </html>
